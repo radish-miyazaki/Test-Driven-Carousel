@@ -1,4 +1,6 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+
 import Carousel from "./Carousel";
 
 describe("Carousel", () => {
@@ -29,6 +31,40 @@ describe("Carousel", () => {
     render(<Carousel slides={slides} />);
 
     const img = screen.getByRole("img");
+    expect(img).toHaveAttribute("src", slides[0].imgUrl);
+  });
+
+  it("advances the slide when the Next button is clicked", async () => {
+    render(<Carousel slides={slides} />);
+
+    const img = screen.getByRole("img");
+    const nextButton = screen.getByTestId("next-button");
+    const user = userEvent.setup();
+
+    await user.click(nextButton);
+    expect(img).toHaveAttribute("src", slides[1].imgUrl);
+
+    await user.click(nextButton);
+    expect(img).toHaveAttribute("src", slides[2].imgUrl);
+
+    await user.click(nextButton);
+    expect(img).toHaveAttribute("src", slides[0].imgUrl);
+  });
+
+  it("reverses the slide when the Prev button is clicked", async () => {
+    render(<Carousel slides={slides} />);
+
+    const img = screen.getByRole("img");
+    const nextButton = screen.getByTestId("prev-button");
+    const user = userEvent.setup();
+
+    await user.click(nextButton);
+    expect(img).toHaveAttribute("src", slides[2].imgUrl);
+
+    await user.click(nextButton);
+    expect(img).toHaveAttribute("src", slides[1].imgUrl);
+
+    await user.click(nextButton);
     expect(img).toHaveAttribute("src", slides[0].imgUrl);
   });
 });
