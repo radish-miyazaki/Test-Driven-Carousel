@@ -36,9 +36,12 @@ describe("CarouselSlide", () => {
   });
 
   it("passes other props through to the <figure>", () => {
-    const className = "my-carousel-figure";
+    const className = "my-carousel-slide";
+    const dataAction = "prev";
 
-    render(<CarouselSlide className={className} />);
-    expect(screen.getByRole("figure")).toHaveClass(className);
+    render(<CarouselSlide className={className} data-action={dataAction} />);
+    const figure = screen.getByRole("figure");
+    expect(figure).toHaveClass(className);
+    expect(figure).toHaveAttribute("data-action", dataAction);
   });
 });
