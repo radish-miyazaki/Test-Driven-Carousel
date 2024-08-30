@@ -11,7 +11,11 @@ export default [
   ...tseslint.configs.recommended,
   {
     ...pluginReact.configs.flat.recommended,
-    settings: { react: { version: "18" } },
+    settings: { react: { version: "detect" } },
+    rules: {
+      // React v 17+ does not require importing React
+      "react/react-in-jsx-scope": "off",
+    },
   },
   eslintConfigPrettier,
 ];
