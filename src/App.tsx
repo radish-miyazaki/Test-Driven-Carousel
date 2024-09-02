@@ -1,5 +1,7 @@
+import ExampleCarousel from "./examples/ExampleCarousel";
+
 function App() {
-  return null;
+  return <ExampleCarousel />;
 }
 
 export default App;
