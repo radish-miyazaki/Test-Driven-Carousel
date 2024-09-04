@@ -44,4 +44,17 @@ describe("CarouselSlide", () => {
     expect(figure).toHaveClass(className);
     expect(figure).toHaveAttribute("data-action", dataAction);
   });
+
+  it("has the expected static styles", () => {
+    render(<CarouselSlide />);
+
+    const img = screen.getByRole("img");
+    expect(img).toHaveStyleRule("object-fit", "cover");
+    expect(img).toHaveStyleRule("width", "100%");
+  });
+
+  it("uses `imgHeight` as the height of the <img>", () => {
+    render(<CarouselSlide imgHeight="123px" />);
+    expect(screen.getByRole("img")).toHaveStyleRule("height", "123px");
+  });
 });
