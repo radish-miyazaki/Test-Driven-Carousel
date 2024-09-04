@@ -1,5 +1,5 @@
 import { ReactNode, useState } from "react";
-import CarouselSlide, { CarouselSlideProps } from "./CarouselSlide";
+import CarouselSlide, { type CarouselSlideProps } from "./CarouselSlide";
 import CarouselButton from "./CarouselButton";
 
 type Slide = {
@@ -9,16 +9,25 @@ type Slide = {
 };
 
 export type CarouselProps = {
-  slides: Slide[];
+  slides?: Slide[];
   defaultImgHeight?: CarouselSlideProps["imgHeight"];
+  DefaultImgComponent?: CarouselSlideProps["ImgComponent"];
 };
 
-const Carousel = ({ slides, defaultImgHeight }: CarouselProps) => {
+const Carousel = ({
+  slides,
+  defaultImgHeight,
+  DefaultImgComponent,
+}: CarouselProps) => {
   const [slideIndex, setSlideIndex] = useState(0);
 
   return (
     <div data-testid="carousel">
-      <CarouselSlide imgHeight={defaultImgHeight} {...slides?.[slideIndex]} />
+      <CarouselSlide
+        imgHeight={defaultImgHeight}
+        ImgComponent={DefaultImgComponent}
+        {...slides?.[slideIndex]}
+      />
       <CarouselButton
         data-testid="prev-button"
         onClick={() => {
