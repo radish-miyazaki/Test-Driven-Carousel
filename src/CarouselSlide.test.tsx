@@ -3,21 +3,6 @@ import CarouselSlide, { ScaledImg } from "./CarouselSlide";
 import styled from "styled-components";
 
 describe("CarouselSlide", () => {
-  it("renders a <figure>", () => {
-    render(<CarouselSlide />);
-    expect(screen.getByRole("figure")).toBeInTheDocument();
-  });
-
-  it("renders an <img> and a <figcaption>", () => {
-    render(<CarouselSlide />);
-
-    const figure = screen.getByRole("figure");
-    const img = screen.getByRole("img");
-    const figcaption = screen.getByTestId("caption");
-    expect(figure).toContainElement(img);
-    expect(figure).toContainElement(figcaption);
-  });
-
   it("passes `imgUrl` through to the <img>", () => {
     const imgUrl = "https://example.com/image.png";
     render(<CarouselSlide imgUrl={imgUrl} />);
@@ -46,14 +31,6 @@ describe("CarouselSlide", () => {
     expect(figure).toHaveAttribute("data-action", dataAction);
   });
 
-  it("has the expected static styles", () => {
-    render(<CarouselSlide />);
-
-    const img = screen.getByRole("img");
-    expect(img).toHaveStyleRule("object-fit", "cover");
-    expect(img).toHaveStyleRule("width", "100%");
-  });
-
   it("uses `imgHeight` as the height of the <img>", () => {
     render(<CarouselSlide imgHeight="123px" />);
     expect(screen.getByRole("img")).toHaveStyleRule("height", "123px");
@@ -69,5 +46,10 @@ describe("CarouselSlide", () => {
     expect(screen.getByRole("img")).toHaveStyleRule("width", "auto");
     expect(screen.getByRole("img")).toHaveStyleRule("height", "250px");
     expect(screen.getByRole("img")).toHaveStyleRule("object-fit", "fill");
+  });
+
+  it("matches snapshot", () => {
+    render(<CarouselSlide />);
+    expect(screen.getByRole("figure")).toMatchSnapshot();
   });
 });
