@@ -1,6 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import CarouselSlide, { ScaledImg } from "./CarouselSlide";
 import styled from "styled-components";
+import Carousel from "./Carousel";
+import slides from "./examples/slides";
+import userEvent from "@testing-library/user-event";
 
 describe("CarouselSlide", () => {
   it("passes `imgUrl` through to the <img>", () => {
@@ -51,5 +54,51 @@ describe("CarouselSlide", () => {
   it("matches snapshot", () => {
     render(<CarouselSlide />);
     expect(screen.getByRole("figure")).toMatchSnapshot();
+  });
+});
+
+describe("with controlled slideIndex", () => {
+  const onSlideIndexChange = vi.fn();
+  const renderCarouselWithSlideIndex = () =>
+    render(
+      <Carousel
+        slides={slides}
+        slideIndex={1}
+        onSlideIndexChange={onSlideIndexChange}
+      />,
+    );
+
+  beforeEach(() => {
+    onSlideIndexChange.mockReset();
+  });
+
+  it("shows the slide corresponding to slideIndex", () => {
+    renderCarouselWithSlideIndex();
+    const img = screen.getByRole("img");
+    expect(img).toHaveAttribute("src", slides[1].imgUrl);
+  });
+
+  it("calls onSlideIndexChange when Prev is clicked", async () => {
+    renderCarouselWithSlideIndex();
+    const img = screen.getByRole("img");
+    const prevButton = screen.getByTestId("prev-button");
+    const user = userEvent.setup();
+
+    await user.click(prevButton);
+    // no change because onSlideIndexChange is mocked
+    expect(img).toHaveAttribute("src", slides[1].imgUrl);
+    expect(onSlideIndexChange).toHaveBeenCalledWith(0);
+  });
+
+  it("calls onSlideIndexChange when Next is clicked", async () => {
+    renderCarouselWithSlideIndex();
+    const img = screen.getByRole("img");
+    const prevButton = screen.getByTestId("next-button");
+    const user = userEvent.setup();
+
+    await user.click(prevButton);
+    // no change because onSlideIndexChange is mocked
+    expect(img).toHaveAttribute("src", slides[1].imgUrl);
+    expect(onSlideIndexChange).toHaveBeenCalledWith(2);
   });
 });
