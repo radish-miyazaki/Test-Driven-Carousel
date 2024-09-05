@@ -22,5 +22,7 @@ export default defineConfig({
     globals: true,
     environment: "happy-dom",
     setupFiles: ["test-setup.ts"],
+    // @see https://github.com/testing-library/react-testing-library/issues/1197
+    fakeTimers: { shouldAdvanceTime: true },
   },
 });
