@@ -18,6 +18,16 @@ export type CarouselProps = {
   DefaultImgComponent?: CarouselSlideProps["ImgComponent"];
 };
 
+/**
+ * A carousel component that displays a series of slides.
+ * @param slides - An array of objects containing slide information.
+ * @param slideIndex - The index of the currently displayed slide.
+ * @param onSlideIndexChange - A callback function that is called when the slide index changes.
+ * @param autoAdvanceInterval - The interval (in milliseconds) at which the carousel should automatically advance to the next slide.
+ * @param defaultImgHeight - The default height of the image displayed in the carousel.
+ * @param DefaultImgComponent - The default component used to render the image in the carousel.
+ * @returns A carousel component.
+ */
 const Carousel = ({
   slides,
   slideIndex: slideIndexProp,
